@@ -7,7 +7,8 @@ class Storage:
         self.used_storage_byte_size = 0
         self.dataset_dict = dict()
         self.cashing_strategy = cashing_strategy
-        cashing_strategy.setStorage(self)
+        if self.cashing_strategy is not None:
+            cashing_strategy.setStorage(self)
 
     def getAvailableSpace(self):
         return self.storage_byte_size - self.used_storage_byte_size
@@ -31,6 +32,8 @@ class Storage:
 
         # Apply cashing strategy if storage is full
         if self.getAvailableSpace() < dataset.byte_size:
+            if self.cashing_strategy is None:
+                raise Exception("Storage need clean and no cashing strategy is set")
             self.cashing_strategy.clearStorage(dataset)
         
         # Add dataset

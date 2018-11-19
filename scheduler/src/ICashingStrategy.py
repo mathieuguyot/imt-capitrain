@@ -1,7 +1,7 @@
 class ICashingStrategy:
 
     def __init__(self):
-        pass
+        self.storage = None
 
     def setStorage(self, storage):
         self.storage = storage

@@ -6,8 +6,8 @@ class LRUCashingStrategy(ICashingStrategy):
         ICashingStrategy.__init__(self)
 
     def deleteLeastRecentDataset(self):
-        dataset = min(self.storage.dataset_dict, key=(lambda key: self.storage.dataset_dict[key].timestamp))
-        self.storage.rmDataset(dataset.id)
+        dataset_id = min(self.storage.dataset_dict, key=(lambda key: self.storage.dataset_dict[key].timestamp))
+        self.storage.rmDataset(dataset_id)
 
     def clearStorage(self, dataset):
         # Infinit loop guard (already checked in storage when adding dataset)
