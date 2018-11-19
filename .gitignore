@@ -3,3 +3,5 @@ out_machine_states.csv
 out_schedule.csv
 out_schedule.trace
 schedulers/__pycache__/
+*.pyc
+.vscode/
