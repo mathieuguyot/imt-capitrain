@@ -1,8 +1,10 @@
 from batsim.batsim import BatsimScheduler, Batsim, Job
 
 import sys
+import time
 import os
 import logging
+from pprint import pprint
 
 from LRUCashingStrategy import LRUCashingStrategy
 from StorageCtrl import StorageCtrl
@@ -16,6 +18,7 @@ class StorageSched(BatsimScheduler):
 
     def __init__(self, options):
         self.options = options
+        self.prev_time = 0
 
     def onSimulationBegins(self):
         self.storageCtrl = StorageCtrl(self.bs)
@@ -27,24 +30,24 @@ class StorageSched(BatsimScheduler):
             byte_size = int(machine["properties"]["byte_size"])
             storage = Storage(id, name, byte_size, LRUCashingStrategy())
             self.storageCtrl.addStorage(storage)
-            
-        # Here we run a test
-        amount = 1024
-        ds = Dataset(1, amount * 1024*1024)
-        self.storageCtrl.storage_dict[12].addDataset(ds)
-        self.storageCtrl.moveDataset(1, 12, 14)
-        self.bs.notify_submission_finished()
 
+        # End the simulation
         self.bs.wake_me_up_at(1000)
 
     def onJobSubmission(self, job):
         pass
 
     def onJobCompletion(self, job):
+        time = job.finish_time - 1000
+        time -= self.prev_time
+        self.prev_time += time
+        self.storageCtrl.addTimeExchangeData(job.id, time)
         self.myprint("Job_finished: " + job.id)
+        self.storageCtrl.printTimeExchangeData()
 
     def onNoMoreEvents(self):
         pass
 
     def onRequestedCall(self):
-        pass
+        self.storageCtrl.generateTimeExchangeData()
+        self.bs.notify_submission_finished()

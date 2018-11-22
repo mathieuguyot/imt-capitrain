@@ -3,7 +3,7 @@ Capitrain project of Quentin EUDE and Mathieu GUYOT
 
 ## Run tests
 cd imt-capitrain
-python -m unittest discover --pattern=*Test.py
+python -B -m unittest discover --pattern=*Test.py
 
 ## Run simulation
 cd imt-capitrain

@@ -16,7 +16,7 @@
         <prop id="watt_per_state" value="0:0:0" />
         <prop id="watt_off" value="0" />
         <prop id="role" value="storage" />
-        <prop id="byte_size" value="2000000000000" />
+        <prop id="byte_size" value="1000000000000000000000000" />
       </host>
     </zone>
 
@@ -55,7 +55,7 @@
           <prop id="watt_per_state" value="0:0:0"/>
           <prop id="watt_off" value="0"/>
           <prop id="role" value="storage"/>
-          <prop id="byte_size" value="500000000000" />
+          <prop id="byte_size" value="1000000000000000000000000" />
         </host>
         <router id="qb0_router"/>
       </zone>
@@ -140,7 +140,7 @@
           <prop id="watt_per_state" value="0:0:0"/>
           <prop id="watt_off" value="0"/>
           <prop id="role" value="storage"/>
-          <prop id="byte_size" value="1000000000000" />
+          <prop id="byte_size" value="1000000000000000000000000" />
         </host>
         <router id="qb1_router"/>
       </zone>
@@ -193,6 +193,14 @@
     <zoneRoute src="qbox1" dst="storage_zone" gw_src="qb1_router" gw_dst="storage_server" symmetrical="NO">
       <link_ctn id="qb1_wan_link" direction="UP" />
     </zoneRoute>
+    
+    <zoneRoute src="qbox0" dst="qbox1" gw_src="qb0_router" gw_dst="qb1_router" symmetrical="NO">
+      <link_ctn id="qb0_wan_link" direction="DOWN"/>
+    </zoneRoute>
+
+    <zoneRoute src="qbox1" dst="qbox0" gw_src="qb1_router" gw_dst="qb0_router" symmetrical="NO">
+      <link_ctn id="qb1_wan_link" direction="UP"/>
+    </zoneRoute>
 
 
     <!-- Dummy links to Batsim's master_host -->
@@ -200,6 +208,9 @@
       <link_ctn id="master_link"/>
     </zoneRoute>
     <zoneRoute src="master_zone" dst="qbox1" gw_src="master_host" gw_dst="qb1_router">
+      <link_ctn id="master_link"/>
+    </zoneRoute>
+    <zoneRoute src="master_zone" dst="storage_zone" gw_src="master_host" gw_dst="storage_server">
       <link_ctn id="master_link"/>
     </zoneRoute>
   </zone>
