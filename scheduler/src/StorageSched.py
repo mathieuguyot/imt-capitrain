@@ -44,6 +44,7 @@ class StorageSched(BatsimScheduler):
         self.storageCtrl.addTimeExchangeData(job.id, time)
         self.myprint("Job_finished: " + job.id)
         self.storageCtrl.printTimeExchangeData()
+        self.storageCtrl.displayGraph()
 
     def onNoMoreEvents(self):
         pass

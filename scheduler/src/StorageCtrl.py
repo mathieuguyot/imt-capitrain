@@ -3,9 +3,10 @@ from procset import ProcSet
 
 from Dataset import Dataset
 from TimeExchangeData import TimeExchangeData
-
+import tkinter
 from pprint import pprint
-
+from networkx import networkx as nx
+import  matplotlib.pyplot as plt
 class StorageCtrl:
 
     def __init__(self, bs): 
@@ -40,7 +41,25 @@ class StorageCtrl:
 
     def printTimeExchangeData(self):
         for key, value in self.time_exchange_data_job_dict.items():
-            pprint(value.time)
+            if value.time != 0:
+                pprint('from : '+str(value.from_storage_id) + '  to : '+str(value.to_storage_id))
+                pprint(value.time)
+
+    def displayGraph(self):
+        G = nx.DiGraph()
+        for key, value in self.time_exchange_data_job_dict.items():
+            if value.time != 0:
+                if not G.has_node(value.from_storage_id):
+                    G.add_node(value.from_storage_id)
+                if not G.has_node(value.to_storage_id):
+                    G.add_node(value.to_storage_id)
+                G.add_edge(value.from_storage_id, value.to_storage_id, weight=value.time)
+        pos = nx.spring_layout(G, scale=2)
+        nx.draw(G, pos,  with_labels=True)
+        labels = nx.get_edge_attributes(G, 'weight')
+        nx.draw_networkx_edge_labels(G, pos , edge_labels= labels)
+        plt.savefig('Graph'+key+'.png', format="PNG")
+        plt.show()
 
     def moveDataset(self, dataset_id, from_storage_id, to_storage_id):
         profile_name = "commUP" + str(self.idSub)
