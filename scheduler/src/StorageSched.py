@@ -49,4 +49,7 @@ class StorageSched(BatsimScheduler):
 
     def onRequestedCall(self):
         self.storageCtrl.generateTimeExchangeData()
+        #ds = Dataset('1', 100000000)
+        #self.storageCtrl.storage_dict[12].addDataset(ds)
+        #self.storageCtrl.moveDataset('1', 12, 14)
         self.bs.notify_submission_finished()
