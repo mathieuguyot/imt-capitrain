@@ -50,7 +50,7 @@ class StorageCtrl:
 
         # Display a graph of the network
         if areAllTimeExchangeDataSet:
-            #self.displayGraph()
+            self.displayGraph()
 
             # Compute floyd warshall with computed network graph
             #self.fw = FloydWarshall(self.time_exchange_data_job_dict, self.storage_ids_arr)
