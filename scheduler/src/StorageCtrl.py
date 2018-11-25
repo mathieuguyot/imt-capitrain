@@ -1,16 +1,19 @@
 from batsim.batsim import Job
 from procset import ProcSet
 
+from FloydWarshall import FloydWarshall
 from Dataset import Dataset
 from TimeExchangeData import TimeExchangeData
 import tkinter
 from pprint import pprint
 from networkx import networkx as nx
 import  matplotlib.pyplot as plt
+
 class StorageCtrl:
 
     def __init__(self, bs): 
         self.storage_dict = dict()
+        self.storage_ids_arr = []
         self.idSub = 0
         self.bs = bs
         # Defining arguments to help time exchange data generation
@@ -19,6 +22,7 @@ class StorageCtrl:
 
     def addStorage(self, storage):
         self.storage_dict[storage.id] = storage
+        self.storage_ids_arr.append(storage.id)
 
     def generateTimeExchangeData(self):
         self.is_generating_time_exchange_data = True
@@ -38,6 +42,20 @@ class StorageCtrl:
 
     def addTimeExchangeData(self, job_id, time):
         self.time_exchange_data_job_dict[job_id].time = time
+        # Check if all time exchange data are set
+        areAllTimeExchangeDataSet = True
+        for k, v in self.time_exchange_data_job_dict.items():
+            if v.time == -1 and areAllTimeExchangeDataSet:
+                areAllTimeExchangeDataSet = False
+
+        # Display a graph of the network
+        if areAllTimeExchangeDataSet:
+            #self.displayGraph()
+
+            # Compute floyd warshall with computed network graph
+            #self.fw = FloydWarshall(self.time_exchange_data_job_dict, self.storage_ids_arr)
+            
+
 
     def printTimeExchangeData(self):
         for key, value in self.time_exchange_data_job_dict.items():

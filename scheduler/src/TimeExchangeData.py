@@ -4,4 +4,4 @@ class TimeExchangeData:
         self.job_id = job_id
         self.from_storage_id = from_storage_id
         self.to_storage_id = to_storage_id
-        self.time = 0
+        self.time = -1
