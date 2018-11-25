@@ -18,6 +18,6 @@ Capitrain project of Quentin EUDE and Mathieu GUYOT.
 
 ## ✔️ TODO
 - Improve vizualisation by dividing overlapping edge and by coloring the shortest path to transfer data.
-- 
+- Run the FW algorithm and after the datasets moves (problem with pybatsim)
 
 
